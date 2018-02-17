@@ -1,0 +1,2 @@
+# 2018TsukubaMachineLearningStudio-
+2018年春開催予定のAzure MLStudioのハンズオン資料です
