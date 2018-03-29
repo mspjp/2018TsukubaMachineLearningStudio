@@ -63,9 +63,9 @@ SELECT A TYPE FOR THE NEW DATASETが「Generic CSV File with a header(.csv)」�
 1. データセットの中身が表示されます。このデータセットは11231行、25列のデータを含みます。
 各行は1回の飛行を表し、飛行日(YEAR, MONTH, DAY_OF_MONTH)や飛行に関する例えば出発地(ORIGIN)と目的地(DEST)、予定出発時刻(CRS_DEP_TIME)と到着時刻(CRS_ARR_TIME)、到着時刻の遅れ(ARR_DELAY)や15分以上遅れていたかどうか(ARR_DEL15)などが含まれます。
 ![図準備中]()
-
 以下に各行の意味を示します。
 なお、時刻はHHMMという形式で保存されています。(例:午後3時-1500)
+
 |Column|Description|
 |---------------------|----------------------------------------------------------------------------------|
 |YEAR|飛行年|
@@ -80,16 +80,27 @@ SELECT A TYPE FOR THE NEW DATASETが「Generic CSV File with a header(.csv)」�
 |ORIGIN|出発空港コード (例：ATL, DFW, HND)|
 |DEST_AIRPORT_ID|到着空港ID|
 |DEST|到着空港コード (例：ATL, DFW, HND)|
-|CRS_DEP_TIME|予定到着時刻|
-|DEP_TIME|実際の到着時刻|
-|DEP_DELAY|Number of minutes departure was delayed|
-|DEP_DEL15|0=Departure delayed less than 15 minutes, 1=Departure delayed 15 minutes or more|
-|CRS_ARR_TIME|Scheduled arrival time|
-|ARR_TIME|Actual arrival time|
-|ARR_DELAY|Number of minutes flight arrived late|
-|ARR_DEL15|0=Arrived less than 15 minutes late, 1=Arrived 15 minutes or more late|
-|CANCELLED|0=Flight was not cancelled, 1=Flight was cancelled|
-|DIVERTED|0=Flight was not diverted, 1=Flight was diverted|
-|CRS_ELAPSED_TIME|Scheduled flight time in minutes|
-|ACTUAL_ELAPSED_TIME|Actual flight time in minutes|
-|DISTANCE|Distance traveled in miles|
+|CRS_DEP_TIME|出発予定時刻|
+|DEP_TIME|実際の出発時刻|
+|DEP_DELAY|出発時間の遅れ|
+|DEP_DEL15|0=15分未満の出発の遅れ, 1=15分以上の出発の遅れ|
+|CRS_ARR_TIME|到着予定時刻|
+|ARR_TIME|実際の到着時刻|
+|ARR_DELAY|到着時間の遅れ|
+|ARR_DEL15|0=15分未満の到着の遅れ, 1=15分以上の到着の遅れ|
+|CANCELLED|0=飛行が行われた, 1=飛行は中止された|
+|DIVERTED|0=予定通りの目的地へ着陸した, 1=予定外の目的地へ着陸した|
+|CRS_ELAPSED_TIME|予定されている飛行時間(分)|
+|ACTUAL_ELAPSED_TIME|実際の飛行時間(分)|
+|DISTANCE|出発地と目的地の距離(マイル)|
+
+> なお、これらすべてのデータが予測モデルに用いられるわけではありません。
+> 例えば飛行機の機体番号が特定のものだからと飛行が遅れたり、飛行が中止されたり、予定外の空港に着陸するということはないように、機体番号は飛行時間の予測には用いることが出来ません。
+> このように明らかに予測モデルに用いれないものが含まれていても、モデル作成時に除外することが出来ます。
+
+1. データセットの列を適当に選択すると、右側の列に詳細が表示されます。
+![図準備中]()
+
+1. 右上の×ボタンを押して「Visualize」ウィンドウを閉じます。
+
+これでデータセットが読み込まれます。
