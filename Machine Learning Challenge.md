@@ -70,11 +70,21 @@ Microsoft は予測モデルに適切なアルゴリズムを選ぶときに役�
 
 ## ヒント2：キャンセルされたフライトと迂回されたフライトの影響を緩和する
 
-The dataset that you are using contains almost 200 rows representing cancelled or diverted flights. These flights are represented by 1s in the CANCELLED or DIVERTED column, which you filtered out with the Select Columns in Dataset module in Exercise 3. Rows representing cancelled or diverted flights have no ARR_DEL15 values, which skews the dataset and therefore the results. Visualize the column and you'll note that it has 188 missing values and three unique values, when it should have just two (0 and 1). These are red flags to a data scientist.
+使用しているデータセットには、キャンセルされたフライトと迂回されたフライトのデータが約200件含まれています。
+これらのフライトにおいては、演習3の Select Columns in Dataset モジュールで除外した CANCELLED または DIVERTED の列の値が1になっています。
+加えて、ARR_DEL15 の値がありません。
+このことはデータセットとその結果を歪ませます。
+可視化した ARR_DEL15 の値を下図に示します。
+ARR_DEL15 の値は2値（0か1）のつもりですが、実際には188個の欠損値を含めた3つのユニークな値があることに注意してください。
 
 ![画像：The ARR_DEL15 column]()
 
-There are multiple ways in which you can attack this. One is to write an R or Python script that removes rows with missing ARR_DEL15 values or simply replaces missing ARR_DEL15 values with 1 to indicate that the flight didn't arrive on time, and inject the script into the model using an Execute R Script or Execute Python Script module. Alternatively, since each row representing a cancelled or diverted flight has a missing feature (a column with no data), you could use the Clean Missing Data module, which makes it very easy to replace missing values or remove rows with missing values altogether.
+これを解決する方法はいくつかあります。
+ひとつは、欠落した ARR_DEL15 の値を持つ行を削除したり、時間どおりに到着しなかったフライトの ARR_DEL15 の値を1に置き換えたりする R や Python のスクリプトを書くことです。
+そして、Execute R Script モジュールか Execute Python Script モジュールを使用して、そのスクリプトをモデルに組込みます。
+
+あるいは、キャンセルされたフライトや迂回されたフライトを表す各行には欠損値（列にデータがない）があるため、Clean Missing Data モジュールを使用することができます。
+このモジュールを使用すると、欠損値を置き換えたり、欠損値を含む行を完全に削除したりすることができます。
 
 
 ## ヒント3: データセットのバランスの悪さを減らす
