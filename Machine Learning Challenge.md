@@ -128,3 +128,40 @@ SELECT A TYPE FOR THE NEW DATASETが「Generic CSV File with a header(.csv)」�
 > また、モジュールは複数の入出力ポートをサポートしているため、モジュールによっては入力や出力ポートが複数あります。
 > ポートが何をするのかを知りたい場合は、ポートの上にカーソルを乗せるとツールチップが表示されます。
 > 更に詳しい情報は、モジュールを右クリックし、ポップアップメニューから「Help」を選択してください。
+
+![図準備中]()
+
+1. データセットモジュール内の「Select Columns」を選択し、右側プロパティーパネルに表示される「Launch column selector」を選択します。
+![図準備中]()
+
+1. 「Available Columns」から以下の項目を選択します。
+
+* MONTH
+* DAY_OF_MONTH
+* DAY_OF_WEEK
+* ORIGIN
+* DEST
+* CRS_DEP_TIME
+* ARR_DEL15
+
+次に右矢印ボタンをクリックし、右側「Selecteed Columns」に選択した項目が追加します。これらは予測モデルに用いられる特徴量となります。
+特徴量を選択したらダイアログ右下にある完了ボタンを押します。
+![図準備中]()
+
+1. モジュールパレット上部の検索ボックスに「edit」と入力し、「Edit Metadata」モジュールを探し、キャンバスに追加します。
+追加したあと、「Select Columns inDataset」モジュールに接続します。
+Edit Metadataについては[こちら(英語)](https://docs.microsoft.com/en-us/azure/machine-learning/studio-module-reference/edit-metadata)を御覧ください。
+![図準備中]()
+
+1. 次に追加した「Edit Metadata」モジュールを選択し、右側プロパティーパネルに表示される「Launch column selector」を選択し、表示される空欄に「ARR_DEL15」を入力し、右下の完了ボタンを押します。
+![図準備中]()
+
+1. サイド右側のプロパティーパネルを編集します。「Categorical」から「Make categorical」を選択します。これによりARR_DEL15は数値ではなくカテゴリーであるということを示します。また、「Fields」から「Label」を選択します。これはARR_DEL15がモデルの予測対象であるということを示します。
+![図準備中]()
+
+1. 次に「Split Data」モジュールを追加し、「Edit Metadata」モジュールへ接続します。このモジュールは入力されたデータセットを、学習用とテスト用に分割します。今回のようにデータセットが学習用とテスト用に分割して提供されていない場合は、このモジュールを利用します。
+キャンバス上で「Split　Data」モジュールを選択し、右側のプロパティーパネルの「Fraction of rows in the first output dataset」を0.8にします。これはデータをどれくらいの比率で分割するかを示すもので0.8にした場合左側(1)に80%、右側(2)に20%のデータが次のモジュールへ送られます。
+Split Dataについては[こちら(英語)](https://docs.microsoft.com/en-us/azure/machine-learning/studio-module-reference/split-data)を御覧ください。
+![図準備中]()
+
+1. 
