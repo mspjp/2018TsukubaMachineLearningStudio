@@ -88,21 +88,31 @@ ARR_DEL15 の値は2値（0か1）のつもりですが、実際には188個の�
 
 
 ## ヒント3: データセットのバランスの悪さを減らす
-In a perfect world, the data used to train a two-class classification model would contain a 50-50 split of positives and negatives. In the real world, it rarely does. Imbalanced datasets often (but not always) adversely affect a model's accuracy. And right now, the data in the ARR_DEL15 column of the dataset you are using — the feature whose value you are attempting to predict — exhibits significant imbalance. The ratio of on-time arrivals to late arrivals is more than 6 to 1.
+2クラス分類モデルを訓練するために使用されるデータは Positive と Negative を半分づつ含んでいることが理想です。
+しかし、現実の世界でそうなっていることはまれです。
+バランスの悪いデータセットは（必ずしもそうとは限りませんが）モデルの精度に悪影響を与えることがあります。
+そして、いま使用しているデータセットの ARR_DEL15 列のデータ（値を予測する対象）はかなりバランスが悪くなっています。
+時間どおりに到着したことを表すデータと遅れて到着したことを表すデータの比率は6対1を超えています。
 
 ![画像：The ARR_DEL15 column]()
 
-Data scientists use two techniques to reduce imbalance. Upsampling increases the number of samples from the minority class — in this case, by adding more rows representing late arrivals. Downsampling does the opposite, reducing the number of samples from the majority class.
+データサイエンティストはこのバランスの悪さを解決するために2つのテクニックを使用します。
+ひとつは、アップサンプリングです。
+アップサンプリングは、少数派のクラスのサンプル数を増やします。
+今回の場合は、遅れて到着する行を追加します。
+もうひとつは、ダウンサンプリングです。
+ダウンサンプリングは、逆に多数派のクラスのサンプル数を減らします。
 
-There are three ways you can reduce imbalance in the datset you were given:
+今回は、データセットのバランスの悪さを解決するための3つの方法があります。
+- 時間どおりに到着したことを表す行の数を減らす。
+- BigFlightData.csv にある大きなデータセットから行をインポートすることで、遅れて到着したことを表す行の数を増やす。（ただし、既に存在する行を複製しないように注意してください。または、[Remove Duplicate Rows](https://msdn.microsoft.com/library/azure/dn905805.aspx) モジュールを使用して重複する行を削除してください。）
+- [SMOTE(Synthetic Minority Oversampling Technique)](https://www.jair.org/media/953/live-953-2037-jair.pdf) を使用して遅れて到着したことを表す行の数を増やす。
 
-- Reduce the number of rows representing on-time arrivals
-- Increase the number of rows representing late arrivals by importing rows from the larger dataset in BigFlightData.csv (be careful not to duplicate rows that are already there, however, or use a Remove Duplicate Rows module to delete them)
-- Increase the number of rows representing late arrivals using the Synthetic Minority Oversampling Technique (SMOTE)
+Azure Machine Learning の [SMOTE](https://msdn.microsoft.com/library/azure/dn913076.aspx) モジュールは、最近傍法を使用して少数派のサンプル数を合成的に増やします。
+バランスの悪さを解消するために SMOTE を使用するモデルは訓練に時間がかかりますが、SMOTE を使用しないモデルよりも良い結果が得られることがあります。
 
-Azure Machine Learning's SMOTE module makes it easy to do the latter, synthetically increasing the number of minority samples using a nearest-neighbor approach. A model that uses SMOTE to reduce imbalance takes longer to train, but often produces better results than one that doesn't.
-
-If you introduce SMOTE, be sure to add it to the model after the Split Data module so that it only affects the training data. Otherwise, the testing data will include synthesized rows, which could lead to misleading (and incorrect) AUC numbers.
+SMOTE を導入する場合は、それを Split Data モジュールの後ろにあるモデルに追加して、訓練データにのみ影響を与えるように注意してください。
+そうしないと、テストデータに合成された行が含まれ、誤った（不正確な）AUCの値になる可能性があります。
 
 ## ヒント4：出発予定時刻を2値化する
 The CRS_DEP_TIME column of the dataset you are using represents scheduled departure times. The granularity of the numbers in this column — it contains 551 unique values — could have a negative impact on accuracy. This can be resolved using a technique called binning or quantization. What if you divided each number in this column by 100 and rounded down to the nearest integer? 1030 would become 10, 1925 would become 19, and so on, and you would be left with a maximum of 24 discrete values in this column. Intuitively, it makes sense, because it probably doesn't matter much whether a flight leaves at 10:30 a.m. or 10:40 a.m. It matters a great deal whether it leaves at 10:30 a.m. or 5:30 p.m.
