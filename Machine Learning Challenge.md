@@ -58,7 +58,7 @@ Azure Machine Learning では、異なるアルゴリズムを試すことは簡
 これは Azure Machine Learning の強みの1つです。
 
 
-演習3で作成したモデルは Two-Class Logistic Regression を使用しています。
+演習3で作成したモデルは [Two-Class Logistic Regression](https://msdn.microsoft.com/library/azure/dn905994.aspx) を使用しています。
 Two-Class Logistic Regression は回帰を使用して2つの最良の結果の確率を計算する一般的なアルゴリズムです。
 最適な結果を得るために異なるアルゴリズムを試してみてください。
 Microsoft は予測モデルに適切なアルゴリズムを選ぶときに役立つアルゴリズムチートシートを提供しています。
@@ -71,7 +71,7 @@ Microsoft は予測モデルに適切なアルゴリズムを選ぶときに役�
 ## ヒント2：キャンセルされたフライトと迂回されたフライトの影響を緩和する
 
 使用しているデータセットには、キャンセルされたフライトと迂回されたフライトのデータが約200件含まれています。
-これらのフライトにおいては、演習3の Select Columns in Dataset モジュールで除外した CANCELLED または DIVERTED の列の値が1になっています。
+これらのフライトにおいては、演習3の [Select Columns in Dataset](https://msdn.microsoft.com/library/azure/dn905883.aspx) モジュールで除外した CANCELLED または DIVERTED の列の値が1になっています。
 加えて、ARR_DEL15 の値がありません。
 このことはデータセットとその結果を歪ませます。
 可視化した ARR_DEL15 の値を下図に示します。
@@ -81,9 +81,9 @@ ARR_DEL15 の値は2値（0か1）のつもりですが、実際には188個の�
 
 これを解決する方法はいくつかあります。
 ひとつは、欠落した ARR_DEL15 の値を持つ行を削除したり、時間どおりに到着しなかったフライトの ARR_DEL15 の値を1に置き換えたりする R や Python のスクリプトを書くことです。
-そして、Execute R Script モジュールか Execute Python Script モジュールを使用して、そのスクリプトをモデルに組込みます。
+そして、[Execute R Script](https://msdn.microsoft.com/library/azure/dn905952.aspx) モジュールか [Execute Python Script](https://msdn.microsoft.com/library/azure/dn955437.aspx) モジュールを使用して、そのスクリプトをモデルに組込みます。
 
-あるいは、キャンセルされたフライトや迂回されたフライトを表す各行には欠損値（列にデータがない）があるため、Clean Missing Data モジュールを使用することができます。
+あるいは、キャンセルされたフライトや迂回されたフライトを表す各行には欠損値（列にデータがない）があるため、[Clean Missing Data](https://msdn.microsoft.com/library/azure/dn906028.aspx) モジュールを使用することができます。
 このモジュールを使用すると、欠損値を置き換えたり、欠損値を含む行を完全に削除したりすることができます。
 
 
@@ -105,7 +105,7 @@ ARR_DEL15 の値は2値（0か1）のつもりですが、実際には188個の�
 
 今回は、データセットのバランスの悪さを解決するための3つの方法があります。
 - 時間どおりに到着したことを表す行の数を減らす。
-- BigFlightData.csv にある大きなデータセットから行をインポートすることで、遅れて到着したことを表す行の数を増やす。（ただし、既に存在する行を複製しないように注意してください。または、[Remove Duplicate Rows](https://msdn.microsoft.com/library/azure/dn905805.aspx) モジュールを使用して重複する行を削除してください。）
+- <b>BigFlightData.csv</b> にある大きなデータセットから行をインポートすることで、遅れて到着したことを表す行の数を増やす。（ただし、既に存在する行を複製しないように注意してください。または、[Remove Duplicate Rows](https://msdn.microsoft.com/library/azure/dn905805.aspx) モジュールを使用して重複する行を削除してください。）
 - [SMOTE(Synthetic Minority Oversampling Technique)](https://www.jair.org/media/953/live-953-2037-jair.pdf) を使用して遅れて到着したことを表す行の数を増やす。
 
 Azure Machine Learning の [SMOTE](https://msdn.microsoft.com/library/azure/dn913076.aspx) モジュールは、最近傍法を使用して少数派のサンプル数を合成的に増やします。
@@ -141,15 +141,15 @@ for index, row in df.iterrows():
 
 ## ヒント5：学習アルゴリズムを調整する
 Azure Machine Learning の各アルゴリズムは、性能の調整に使用することができるパラメータを公開しています。
-Two-Class Logistic Regression などのアルゴリズムモジュールをキャンバス上で選択すると、そのパラメータが Properties ペインに表示されます。
+[Two-Class Logistic Regression](https://msdn.microsoft.com/library/azure/dn905994.aspx) などのアルゴリズムモジュールをキャンバス上で選択すると、そのパラメータが Properties ペインに表示されます。
 
 ![画像：Parameters for Two-Class Logistic Regression]()
 
 異なるパラメータを試すことによってモデルの精度が向上することがありますが、この調整には時間がかかります。
-そのため、Azure Machine Learning では Tune Model Hyperparameters という名前のモジュールを提供しています。 
-Train Model を Tune Model Hyperparameters で置き換えることで、訓練にかかる時間を犠牲にする代わりに、パラメータの最適な組み合わせを見つけることができます。
+そのため、Azure Machine Learning では [Tune Model Hyperparameters](https://msdn.microsoft.com/library/azure/dn905810.aspx) という名前のモジュールを提供しています。 
+[Train Model](https://msdn.microsoft.com/library/azure/dn906044.aspx) を Tune Model Hyperparameters で置き換えることで、訓練にかかる時間を犠牲にする代わりに、パラメータの最適な組み合わせを見つけることができます。
 
-> Tune Model Hyperparameters を使用するとき、特に parameter sweep mode を Entire grid に設定すると、訓練にかかる時間が大幅に長くなります。
+> Tune Model Hyperparameters を使用するとき、特に parameter sweep mode を <b>Entire grid</b> に設定すると、訓練にかかる時間が大幅に長くなります。
 
 ![画像：Using Tune Model Hyperparameters]()
 
@@ -162,5 +162,5 @@ BigFlightData.csv には、モデルを訓練したデータセットの約4倍�
 より大きなデータセットでモデルを訓練すると、精度が向上することがあります。
 ただし、訓練には時間がかかるため、小さなデータセットでモデルを調整してから、より大きなデータセットを導入するとよいでしょう。
 
-目標は0.75以上のAUCの値を達成することです。
+目標は<b>0.75以上</b>のAUCの値を達成することでした。
 もし達成することができたら、あなたはデータサイエンティストのように考えることを学んだと言えるでしょう！
