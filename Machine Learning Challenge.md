@@ -114,20 +114,30 @@ Azure Machine Learning の [SMOTE](https://msdn.microsoft.com/library/azure/dn91
 SMOTE を導入する場合は、それを Split Data モジュールの後ろにあるモデルに追加して、訓練データにのみ影響を与えるように注意してください。
 そうしないと、テストデータに合成された行が含まれ、誤った（不正確な）AUCの値になる可能性があります。
 
-## ヒント4：出発予定時刻を2値化する
-The CRS_DEP_TIME column of the dataset you are using represents scheduled departure times. The granularity of the numbers in this column — it contains 551 unique values — could have a negative impact on accuracy. This can be resolved using a technique called binning or quantization. What if you divided each number in this column by 100 and rounded down to the nearest integer? 1030 would become 10, 1925 would become 19, and so on, and you would be left with a maximum of 24 discrete values in this column. Intuitively, it makes sense, because it probably doesn't matter much whether a flight leaves at 10:30 a.m. or 10:40 a.m. It matters a great deal whether it leaves at 10:30 a.m. or 5:30 p.m.
+## ヒント4：出発予定時刻をビニングする
+使用しているデータセットの CRS_DEP_TIME 列は出発予定時刻を表しています。
+この列の数値の粒度 （551個のユニークな値を含む）は精度に悪影響を及ぼす可能性があります。
+これは[ビニング](http://data-informed.com/enhance-machine-learning-with-standardizing-binning-reducing/)や量子化と呼ばれるテクニックを使用して解決することが可能です。
+この列の各数値を100で割り、最も近い整数に切り捨てられた場合はどうなりますか？
+1030が10になり、1925が19になるなど、この列に最大24の離散値が残されます。
+直感的に言えば、フライトが午前10時30分または午前10時40分に出発するかどうかは問題ではありません。
+対して、午前10時30分または午後5時30分に出発するかどうかは大変重要なことです。
 
 ![画像：The CRS_DEP_TIME column]()
 
-There are several ways to accomplish binning in Azure Machine Learning. One of them is the Group Data Into Bins module. More often, data scientists prefer to write a few lines of R or Python code, which are easily incorporated into a model using Execute R Script or Execute Python Script. Here's a simple Python script that bins CRS_DEP_TIME values as described above:
+Azure Machine Learning においてビニングする方法はいくつかあります。
+そのうちの1つは、[Group Data Into Bins](https://msdn.microsoft.com/library/azure/dn913065.aspx) モジュールを使用することです。
+多くの場合、データサイエンティストは数行の R または Python のコードを書くことを好みます。
+そして、これらのコードは [Execute R Script](https://msdn.microsoft.com/library/azure/dn905952.aspx) または [Execute Python Script](https://msdn.microsoft.com/library/azure/dn955437.aspx) を使用してモデルに簡単に組み込むことができます。
+CRS_DEP_TIME の値をビニングする簡単な Python のスクリプトを以下に示します。
 
 ```python
-# Assume df is the dataframe containing the data
+# df はデータを含むデータフレーム
 for index, row in df.iterrows():
     df.loc[index, 'CRS_DEP_TIME'] = math.floor(row['CRS_DEP_TIME'] / 100)
 ```
 
-If binning departure times in this manner improves the accuracy of the model, you might experiment with different bin sizes as well.
+このように出発時をビニングするとモデルの精度が向上する場合は、異なるビンサイズを試してみてもよいでしょう。
 
 ## ヒント5：学習アルゴリズムを調整する
 Azure Machine Learning の各アルゴリズムは、性能の調整に使用することができるパラメータを公開しています。
