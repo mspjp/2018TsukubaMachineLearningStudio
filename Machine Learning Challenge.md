@@ -42,18 +42,18 @@ Machine Learning Challenge では、以下の演習を実施します。
 
 # 演習4：モデルをチューニングする
 ここからが楽しいところです。
-データサイエンティストの帽子をかぶって、モデルを高い精度がでるように調整しましょう。
+データサイエンティストの帽子をかぶって、高い精度がでるようにモデルを調整しましょう。
 目標は<b>AUCを0.75以上</b>にすることです。
 しかし、それには専門知識が必要です。
 
 演習4では、その目標を達成するために6つのヒントを提供します。
 これらのヒントは、熟練のデータサイエンティストがより堅牢なモデルを作成するために用いるテクニックです。
-そして、AUCを0.75にするための唯一の方法ではありませんが、調整を始めるのに適しています。
+これらはAUCを0.75にするための唯一の方法ではありませんが、モデルの調整を始めるのに適しています。
 
 
 ## ヒント1：異なるアルゴリズムを試す
 ML Studio にはモデルに使用できる9つの2値分類アルゴリズムが含まれています。
-どのアルゴリズムが最良の結果をもたらすかは、熟練したデータサイエンティストでさえも試してみるまで知らないことがあります。
+どのアルゴリズムが最良の結果をもたらすかは、熟練したデータサイエンティストでさえも試してみるまで分からないことがあります。
 Azure Machine Learning では、異なるアルゴリズムを試すことは簡単で、あるモジュールを別のモジュールと交換するだけです。
 これは Azure Machine Learning の強みの1つです。
 
@@ -70,9 +70,9 @@ Microsoft は予測モデルに適切なアルゴリズムを選ぶときに役�
 
 ## ヒント2：キャンセルされたフライトと迂回されたフライトの影響を緩和する
 
-使用しているデータセットには、キャンセルされたフライトと迂回されたフライトのデータが約200件含まれています。
-これらのフライトにおいては、演習3の [Select Columns in Dataset](https://msdn.microsoft.com/library/azure/dn905883.aspx) モジュールで除外した CANCELLED または DIVERTED の列の値が1になっています。
-加えて、ARR_DEL15 の値がありません。
+使用しているデータセットには、キャンセルされたフライトまたは迂回されたフライトを表すデータが約200件含まれています。
+これらのフライトは、演習3の [Select Columns in Dataset](https://msdn.microsoft.com/library/azure/dn905883.aspx) モジュールで除外した CANCELLED または DIVERTED の列の値が1で表されています。
+キャンセルされたフライトまたは迂回されたフライトを表す行には ARR_DEL15 の値がありません。
 このことはデータセットとその結果を歪ませます。
 可視化した ARR_DEL15 の値を下図に示します。
 ARR_DEL15 の値は2値（0か1）のつもりですが、実際には188個の欠損値を含めた3つのユニークな値があることに注意してください。
@@ -80,10 +80,10 @@ ARR_DEL15 の値は2値（0か1）のつもりですが、実際には188個の�
 ![画像：The ARR_DEL15 column]()
 
 これを解決する方法はいくつかあります。
-ひとつは、欠落した ARR_DEL15 の値を持つ行を削除したり、時間どおりに到着しなかったフライトの ARR_DEL15 の値を1に置き換えたりする R や Python のスクリプトを書くことです。
+ひとつは、欠損した ARR_DEL15 の値を持つ行を削除したり、時間どおりに到着しなかったフライトの ARR_DEL15 の値を1に置き換えたりする R や Python のスクリプトを書くことです。
 そして、[Execute R Script](https://msdn.microsoft.com/library/azure/dn905952.aspx) モジュールか [Execute Python Script](https://msdn.microsoft.com/library/azure/dn955437.aspx) モジュールを使用して、そのスクリプトをモデルに組込みます。
 
-あるいは、キャンセルされたフライトや迂回されたフライトを表す各行には欠損値（列にデータがない）があるため、[Clean Missing Data](https://msdn.microsoft.com/library/azure/dn906028.aspx) モジュールを使用することができます。
+あるいは、キャンセルされたフライトまたは迂回されたフライトを表す各行には欠損値（列にデータがない）があるため、[Clean Missing Data](https://msdn.microsoft.com/library/azure/dn906028.aspx) モジュールを使用することができます。
 このモジュールを使用すると、欠損値を置き換えたり、欠損値を含む行を完全に削除したりすることができます。
 
 
@@ -103,7 +103,7 @@ ARR_DEL15 の値は2値（0か1）のつもりですが、実際には188個の�
 もうひとつは、ダウンサンプリングです。
 ダウンサンプリングは、逆に多数派のクラスのサンプル数を減らします。
 
-今回は、データセットのバランスの悪さを解決するための3つの方法があります。
+今回は、データセットのバランスの悪さを解決するための方法が3つあります。
 - 時間どおりに到着したことを表す行の数を減らす。
 - <b>BigFlightData.csv</b> にある大きなデータセットから行をインポートすることで、遅れて到着したことを表す行の数を増やす。（ただし、既に存在する行を複製しないように注意してください。または、[Remove Duplicate Rows](https://msdn.microsoft.com/library/azure/dn905805.aspx) モジュールを使用して重複する行を削除してください。）
 - [SMOTE(Synthetic Minority Oversampling Technique)](https://www.jair.org/media/953/live-953-2037-jair.pdf) を使用して遅れて到着したことを表す行の数を増やす。
@@ -116,7 +116,7 @@ SMOTE を導入する場合は、それを Split Data モジュールの後ろ�
 
 ## ヒント4：出発予定時刻をビニングする
 使用しているデータセットの CRS_DEP_TIME 列は出発予定時刻を表しています。
-この列の数値の粒度 （551個のユニークな値を含む）は精度に悪影響を及ぼす可能性があります。
+この列の数値の粒度 （ユニークな値を551個含む）は精度に悪影響を及ぼす可能性があります。
 これは[ビニング](http://data-informed.com/enhance-machine-learning-with-standardizing-binning-reducing/)や量子化と呼ばれるテクニックを使用して解決することが可能です。
 この列の各数値を100で割り、最も近い整数に切り捨てられた場合はどうなりますか？
 1030が10になり、1925が19になるなど、この列に最大24の離散値が残されます。
@@ -137,7 +137,7 @@ for index, row in df.iterrows():
     df.loc[index, 'CRS_DEP_TIME'] = math.floor(row['CRS_DEP_TIME'] / 100)
 ```
 
-このように出発時をビニングするとモデルの精度が向上する場合は、異なるビンサイズを試してみてもよいでしょう。
+このようにして出発時刻をビニングするとモデルの精度が向上する場合は、異なるビンサイズを試してみてもよいでしょう。
 
 ## ヒント5：学習アルゴリズムを調整する
 Azure Machine Learning の各アルゴリズムは、性能の調整に使用することができるパラメータを公開しています。
@@ -147,18 +147,18 @@ Azure Machine Learning の各アルゴリズムは、性能の調整に使用す
 
 異なるパラメータを試すことによってモデルの精度が向上することがありますが、この調整には時間がかかります。
 そのため、Azure Machine Learning では [Tune Model Hyperparameters](https://msdn.microsoft.com/library/azure/dn905810.aspx) という名前のモジュールを提供しています。 
-[Train Model](https://msdn.microsoft.com/library/azure/dn906044.aspx) を Tune Model Hyperparameters で置き換えることで、訓練にかかる時間を犠牲にする代わりに、パラメータの最適な組み合わせを見つけることができます。
+[Train Model](https://msdn.microsoft.com/library/azure/dn906044.aspx) を Tune Model Hyperparameters で置き換えることで、訓練に時間をかける代わりに、パラメータの最適な組み合わせを見つけることができます。
 
 > Tune Model Hyperparameters を使用するとき、特に parameter sweep mode を <b>Entire grid</b> に設定すると、訓練にかかる時間が大幅に長くなります。
 
 ![画像：Using Tune Model Hyperparameters]()
 
 学習アルゴリズムを調整する方法は Tune Model Hyperparameters だけではありません。
-その他のアイデアについては[https://docs.microsoft.com/azure/machine-learning/machine-learning-algorithm-parameters-optimize](https://docs.microsoft.com/azure/machine-learning/machine-learning-algorithm-parameters-optimize)を参照してください。
+その他のアイデアについては [https://docs.microsoft.com/azure/machine-learning/machine-learning-algorithm-parameters-optimize](https://docs.microsoft.com/azure/machine-learning/machine-learning-algorithm-parameters-optimize) を参照してください。
 
 
 ## ヒント6：より大きいデータセットで訓練する
-BigFlightData.csv には、モデルを訓練したデータセットの約4倍のデータセットが含まれています。
+<b>BigFlightData.csv</b> には、モデルの訓練に使用したデータセットの約4倍のデータセットが含まれています。
 より大きなデータセットでモデルを訓練すると、精度が向上することがあります。
 ただし、訓練には時間がかかるため、小さなデータセットでモデルを調整してから、より大きなデータセットを導入するとよいでしょう。
 
