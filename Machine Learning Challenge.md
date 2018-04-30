@@ -164,4 +164,27 @@ Edit Metadataについては[こちら(英語)](https://docs.microsoft.com/en-us
 Split Dataについては[こちら(英語)](https://docs.microsoft.com/en-us/azure/machine-learning/studio-module-reference/split-data)を御覧ください。
 ![図準備中]()
 
-1. 
+1. 「Train Model」モジュールを追加し、「Split Data」モジュールの出力を「Train Model」の右側の入力に接続します。次に「Two-Class Logistic Regression」モジュールを追加し、その出力を「Train Model」モジュールの左側の入力に接続します。
+Train Modelモジュールについては[こちら(英語)](https://msdn.microsoft.com/en-us/library/azure/dn906044.aspx)を、Two-Class Logistic Regressionモジュールについては[こちら(英語)](https://docs.microsoft.com/en-us/azure/machine-learning/studio-module-reference/two-class-logistic-regression)を御覧ください。
+> ロジスティック回帰とは、発生確率を予測する手法で、例えば遅刻するか否かの確率を予測するときに利用でき、分類問題でも用いられています。
+> Azure ML StudioではTrain ModelにTwo-Class Logistic Regressionモジュールを接続するように学習アルゴリズムを指定することが出来ます。
+> そのため、あとから学習アルゴリズムを変更することが容易です。
+![図準備中]()
+
+1. Train Modelを選択し、プロパティパネルの「Launch column selector」を選択します。表示れるダイアログで「ARR_DEL15」の列を選択し、右下のチェックボタンを押します。
+これは、TrainModelにどの値を予測するかを指定します（重要）。
+![図準備中]()
+
+1. 「Score Model」モジュールと「Evaluate Model」モジュールを追加し、図のように接続します。
+Score Modelモジュールについては[こちら(英語)](https://docs.microsoft.com/en-us/azure/machine-learning/studio-module-reference/score-model)を、Evaluate Modelモジュールについては[こちら(英語)](https://docs.microsoft.com/en-us/azure/machine-learning/studio-module-reference/evaluate-model)を御覧ください。
+![図準備中]()
+
+1. 最後に作成したモデルを保存するため、ページ下部の「Save」ボタンを押します。続けて、「Run」ボタンを押して、アップロードしたデータセットを利用しモデルを学習させます（数分かかります）。
+![図準備中]()
+
+1. 学習終了後、「Evalute Mode」モジュールの出力ポートをクリックし、「Visualize」ボタンを押し、モデルの精度を確認します。スクロールすると正確度(accuracy)、精度(precision)、AUC(Area Under Curve)などが表示されます。
+
+![図準備中]()
+
+2値分類モデルの精度を図る方法はいくつかあります。図の例では正確度は87%, 精度は1.000であり、良さそうに見えますが、精度と再現性(recall)の加重平均であるF1スコアは0でAUCは0.579です。これは58%の確率で正しい予測ができ、あとは間違うというものであり、ほぼランダムに近い予測モデルとなっています。
+精度、正確度などについては[こちら(英語)](https://blogs.msdn.microsoft.com/andreasderuiter/2015/02/09/performance-measures-in-azure-ml-accuracy-precision-recall-and-f1-score/)を御覧ください。
