@@ -6,9 +6,7 @@ Machine Learning Challenge では、[Azure Machine Learning Studio](https://azur
 目標は、所定のフライトが到着予定時刻通りに到着する可能性を予測するための、実世界で有用なモデルを作成することです。
 
 ## 前提条件
-//- Microsoft のアカウント（[https://account.microsoft.com/account]()）
-// アカウントいらない？
-// リンク切れ
+- Microsoft のアカウント
 - Microsoft Edge や Google Chrome などの最新のブラウザ
 
 # 演習
@@ -25,8 +23,9 @@ Machine Learning Challenge では、以下の演習を実施します。
 1. Webブラウザで[https://azure.microsoft.com/ja-jp/services/machine-learning-studio/]()に移動し、慰安すぐご利用くださいをクリックします。
 ![](./Images/AzureML_entrance.PNG)
 
-1. 8-hour trialのEnterを押します．
-![](./Images/8-hour_trial.PNG)
+1. 真ん中のSign Inを押します．
+![](./Images/SignIn.PNG)
+>8時間トライアル版では，後々DATASETのLocal FileをUploadできないので注意．
 
 1. ページの左下にある[+ NEW]をクリックし、[Blank Experiment]をクリックして、新しい実験を作成します。
 ![](./Images/ml-studio.jpg)
@@ -40,7 +39,7 @@ Machine Learning Challenge では、以下の演習を実施します。
 
 
 # 演習2：データセットの読み込み
-Azule ML Studioには「実験」にデータを読み込むための仕組みが複数用意されています。この演習では、Azure blob Storageサービス上に用意されているZpiファイルをダウンロードし、ML Studioに用意されているローカルファイルの読み込み機能(From Local File)を使って演習1で作成した「実験」にデータセットを追加します。
+Azule ML Studioには「実験」にデータを読み込むための仕組みが複数用意されています。この演習では、Azure blob Storageサービス上に用意されているZipファイルをダウンロードし、ML Studioに用意されているローカルファイルの読み込み機能(From Local File)を使って演習1で作成した「実験」にデータセットを追加します。
 
 データセットには、米国大手の航空会社の飛行機到着時刻が含まれています。
 なお、このデータセットは[アメリカ交通統計局](https://www.bts.gov/)が提供する[データセット](https://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236&DB_Short_Name=On-Time)のサブセット版です。
@@ -50,21 +49,19 @@ Azule ML Studioには「実験」にデータを読み込むための仕組み�
 >演習3では学習時間短縮のためデータ数が少ないFlightData.csvを使いますが、演習4ではお好みでBigFlightData.csvを用いてもらっても構いません。
 
 1. ML Studioの戻り、「NEW」を選択し、「DATASET」から「FROM LOCAL FILE」を選択します。
-![図準備中]()
-
-1. Upload a new datasetダイアログの「Brouse」ボタンを選択し、保存したFlightData.csvを選択します。
+そして，Upload a new datasetダイアログの「Brouse」ボタンを選択し、保存したFlightData.csvを選択します。
 SELECT A TYPE FOR THE NEW DATASETが「Generic CSV File with a header(.csv)」になっていることを確認し、右下の「チェックボタン」を押してデータセットをアップロードします。
-![図準備中]()
+![](./Images/UploadLocalFile.PNG)
 
 1. データセットアップロード後、「Module Pallete」に戻り、左側のメニュー「Saved Datasets」以下にある「FlightData.csv」を探し、パレット上にドラッグ・アンド・ドロップします。
-![図準備中]()
+![](./Images/Drag_And_Drop_to_Module_Pallete.PNG)
 
 1. このデータセットに何が含まれているかを確認してみます。パレット上「FlightData.csv」を右クリックし、「Visualize」を選択します。
-![図準備中]()
+![](./Images/Visualize_Dataset.PNG)
 
 1. データセットの中身が表示されます。このデータセットは11231行、25列のデータを含みます。
 各行は1回の飛行を表し、飛行日(YEAR, MONTH, DAY_OF_MONTH)や飛行に関する例えば出発地(ORIGIN)と目的地(DEST)、予定出発時刻(CRS_DEP_TIME)と到着時刻(CRS_ARR_TIME)、到着時刻の遅れ(ARR_DELAY)や15分以上遅れていたかどうか(ARR_DEL15)などが含まれます。
-![図準備中]()
+![](./Images/Dataset.PNG)
 以下に各行の意味を示します。
 なお、時刻はHHMMという形式で保存されています。(例:午後3時-1500)
 
@@ -101,7 +98,7 @@ SELECT A TYPE FOR THE NEW DATASETが「Generic CSV File with a header(.csv)」�
 > このように明らかに予測モデルに用いれないものが含まれていても、モデル作成時に除外することが出来ます。
 
 1. データセットの列を適当に選択すると、右側の列に詳細が表示されます。
-![図準備中]()
+![](./Images/Dataset_Detail.png)
 
 1. 右上の×ボタンを押して「Visualize」ウィンドウを閉じます。
 
