@@ -6,9 +6,10 @@ Machine Learning Challenge では、[Azure Machine Learning Studio](https://azur
 目標は、所定のフライトが到着予定時刻通りに到着する可能性を予測するための、実世界で有用なモデルを作成することです。
 
 ## 前提条件
-- Microsoft のアカウント（[https://account.microsoft.com/account]()）
+//- Microsoft のアカウント（[https://account.microsoft.com/account]()）
+// アカウントいらない？
+// リンク切れ
 - Microsoft Edge や Google Chrome などの最新のブラウザ
-
 
 # 演習
 Machine Learning Challenge では、以下の演習を実施します。
@@ -21,11 +22,11 @@ Machine Learning Challenge では、以下の演習を実施します。
 # 演習1：機械学習の実験を作成する
 最初のステップでは、Azure Machine Learning Studio を使用するために、機械学習の実験（Experiment）を以下の手順で作成します。
 
-1. Webブラウザで[http://studio.azureml.net/]()に移動し、[Sign Up]をクリックします。
-![](./Images/sign-up.jpg)
+1. Webブラウザで[https://azure.microsoft.com/ja-jp/services/machine-learning-studio/]()に移動し、慰安すぐご利用くださいをクリックします。
+![](./Images/AzureML_entrance.PNG)
 
-1. Microsoft アカウントを使用してサインインします。
-![](./Images/sign-in.jpg)
+1. 8-hour trialのEnterを押します．
+![](./Images/8-hour_trial.PNG)
 
 1. ページの左下にある[+ NEW]をクリックし、[Blank Experiment]をクリックして、新しい実験を作成します。
 ![](./Images/ml-studio.jpg)
@@ -36,9 +37,6 @@ Machine Learning Challenge では、以下の演習を実施します。
 
 これで、機械学習のモデルを構築、訓練およびテストすることができる機械学習の実験を作成できました。
 次のステップでは、訓練とテストに使用するためのデータセットをアップロードします。
-
-
-
 
 
 # 演習2：データセットの読み込み
