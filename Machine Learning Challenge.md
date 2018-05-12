@@ -20,7 +20,7 @@ Machine Learning Challenge では、以下の演習を実施します。
 # 演習1：機械学習の実験を作成する
 最初のステップでは、Azure Machine Learning Studio を使用するために、機械学習の実験（Experiment）を以下の手順で作成します。
 
-1. Webブラウザで[https://azure.microsoft.com/ja-jp/services/machine-learning-studio/]()に移動し、慰安すぐご利用くださいをクリックします。
+1. Webブラウザで[https://azure.microsoft.com/ja-jp/services/machine-learning-studio/]()に移動し、いますぐご利用くださいをクリックします。
 ![](./Images/AzureML_entrance.PNG)
 
 1. 真ん中のSign Inを押します．
