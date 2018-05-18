@@ -48,18 +48,18 @@ Azule ML Studioには「実験」にデータを読み込むための仕組み�
 >FlightData.csvは11231件のデータが、BigFlightData.csvは44360件のデータが含まれており、FlightData.csvはBigFlightData.csvのサブセットになっています。
 >演習3では学習時間短縮のためデータ数が少ないFlightData.csvを使いますが、演習4ではお好みでBigFlightData.csvを用いてもらっても構いません。
 
-1. ML Studioの戻り、「NEW」を選択し、「DATASET」から「FROM LOCAL FILE」を選択します。
+2. ML Studioの戻り、「NEW」を選択し、「DATASET」から「FROM LOCAL FILE」を選択します。
 そして，Upload a new datasetダイアログの「Brouse」ボタンを選択し、保存したFlightData.csvを選択します。
 SELECT A TYPE FOR THE NEW DATASETが「Generic CSV File with a header(.csv)」になっていることを確認し、右下の「チェックボタン」を押してデータセットをアップロードします。
 ![](./Images/UploadLocalFile.PNG)
 
-1. データセットアップロード後、「Module Pallete」に戻り、左側のメニュー「Saved Datasets」以下にある「FlightData.csv」を探し、パレット上にドラッグ・アンド・ドロップします。
+3. データセットアップロード後、「Module Pallete」に戻り、左側のメニュー「Saved Datasets」以下にある「FlightData.csv」を探し、パレット上にドラッグ・アンド・ドロップします。
 ![](./Images/Drag_And_Drop_to_Module_Pallete.PNG)
 
-1. このデータセットに何が含まれているかを確認してみます。パレット上「FlightData.csv」を右クリックし、「Visualize」を選択します。
+4. このデータセットに何が含まれているかを確認してみます。パレット上「FlightData.csv」を右クリックし、「Visualize」を選択します。
 ![](./Images/Visualize_Dataset.PNG)
 
-1. データセットの中身が表示されます。このデータセットは11231行、25列のデータを含みます。
+5. データセットの中身が表示されます。このデータセットは11231行、25列のデータを含みます。
 各行は1回の飛行を表し、飛行日(YEAR, MONTH, DAY_OF_MONTH)や飛行に関する例えば出発地(ORIGIN)と目的地(DEST)、予定出発時刻(CRS_DEP_TIME)と到着時刻(CRS_ARR_TIME)、到着時刻の遅れ(ARR_DELAY)や15分以上遅れていたかどうか(ARR_DEL15)などが含まれます。
 ![](./Images/Dataset.PNG)
 以下に各行の意味を示します。
@@ -97,10 +97,10 @@ SELECT A TYPE FOR THE NEW DATASETが「Generic CSV File with a header(.csv)」�
 > 例えば飛行機の機体番号が特定のものだからと飛行が遅れたり、飛行が中止されたり、予定外の空港に着陸するということはないように、機体番号は飛行時間の予測には用いることが出来ません。
 > このように明らかに予測モデルに用いれないものが含まれていても、モデル作成時に除外することが出来ます。
 
-1. データセットの列を適当に選択すると、右側の列に詳細が表示されます。
+6. データセットの列を適当に選択すると、右側の列に詳細が表示されます。
 ![](./Images/Dataset_Detail.png)
 
-1. 右上の×ボタンを押して「Visualize」ウィンドウを閉じます。
+7. 右上の×ボタンを押して「Visualize」ウィンドウを閉じます。
 
 これでデータセットが読み込まれます。
 
@@ -130,10 +130,10 @@ SELECT A TYPE FOR THE NEW DATASETが「Generic CSV File with a header(.csv)」�
 
 ![図準備中]()
 
-1. データセットモジュール内の「Select Columns」を選択し、右側プロパティーパネルに表示される「Launch column selector」を選択します。
+2. データセットモジュール内の「Select Columns」を選択し、右側プロパティーパネルに表示される「Launch column selector」を選択します。
 ![図準備中]()
 
-1. 「Available Columns」から以下の項目を選択します。
+3. 「Available Columns」から以下の項目を選択します。
 
 * MONTH
 * DAY_OF_MONTH
@@ -147,41 +147,41 @@ SELECT A TYPE FOR THE NEW DATASETが「Generic CSV File with a header(.csv)」�
 特徴量を選択したらダイアログ右下にある完了ボタンを押します。
 ![図準備中]()
 
-1. モジュールパレット上部の検索ボックスに「edit」と入力し、「Edit Metadata」モジュールを探し、キャンバスに追加します。
+4. モジュールパレット上部の検索ボックスに「edit」と入力し、「Edit Metadata」モジュールを探し、キャンバスに追加します。
 追加したあと、「Select Columns inDataset」モジュールに接続します。
 Edit Metadataについては[こちら(英語)](https://docs.microsoft.com/en-us/azure/machine-learning/studio-module-reference/edit-metadata)を御覧ください。
 ![図準備中]()
 
-1. 次に追加した「Edit Metadata」モジュールを選択し、右側プロパティーパネルに表示される「Launch column selector」を選択し、表示される空欄に「ARR_DEL15」を入力し、右下の完了ボタンを押します。
+5. 次に追加した「Edit Metadata」モジュールを選択し、右側プロパティーパネルに表示される「Launch column selector」を選択し、表示される空欄に「ARR_DEL15」を入力し、右下の完了ボタンを押します。
 ![図準備中]()
 
-1. サイド右側のプロパティーパネルを編集します。「Categorical」から「Make categorical」を選択します。これによりARR_DEL15は数値ではなくカテゴリーであるということを示します。また、「Fields」から「Label」を選択します。これはARR_DEL15がモデルの予測対象であるということを示します。
+6. サイド右側のプロパティーパネルを編集します。「Categorical」から「Make categorical」を選択します。これによりARR_DEL15は数値ではなくカテゴリーであるということを示します。また、「Fields」から「Label」を選択します。これはARR_DEL15がモデルの予測対象であるということを示します。
 ![図準備中]()
 
-1. 次に「Split Data」モジュールを追加し、「Edit Metadata」モジュールへ接続します。このモジュールは入力されたデータセットを、学習用とテスト用に分割します。今回のようにデータセットが学習用とテスト用に分割して提供されていない場合は、このモジュールを利用します。
+7. 次に「Split Data」モジュールを追加し、「Edit Metadata」モジュールへ接続します。このモジュールは入力されたデータセットを、学習用とテスト用に分割します。今回のようにデータセットが学習用とテスト用に分割して提供されていない場合は、このモジュールを利用します。
 キャンバス上で「Split　Data」モジュールを選択し、右側のプロパティーパネルの「Fraction of rows in the first output dataset」を0.8にします。これはデータをどれくらいの比率で分割するかを示すもので0.8にした場合左側(1)に80%、右側(2)に20%のデータが次のモジュールへ送られます。
 Split Dataについては[こちら(英語)](https://docs.microsoft.com/en-us/azure/machine-learning/studio-module-reference/split-data)を御覧ください。
 ![図準備中]()
 
-1. 「Train Model」モジュールを追加し、「Split Data」モジュールの出力を「Train Model」の右側の入力に接続します。次に「Two-Class Logistic Regression」モジュールを追加し、その出力を「Train Model」モジュールの左側の入力に接続します。
+8. 「Train Model」モジュールを追加し、「Split Data」モジュール左側の出力を「Train Model」の右側の入力に接続します。次に「Two-Class Logistic Regression」モジュールを追加し、その出力を「Train Model」モジュールの左側の入力に接続します。
 Train Modelモジュールについては[こちら(英語)](https://msdn.microsoft.com/en-us/library/azure/dn906044.aspx)を、Two-Class Logistic Regressionモジュールについては[こちら(英語)](https://docs.microsoft.com/en-us/azure/machine-learning/studio-module-reference/two-class-logistic-regression)を御覧ください。
 > ロジスティック回帰とは、発生確率を予測する手法で、例えば遅刻するか否かの確率を予測するときに利用でき、分類問題でも用いられています。
 > Azure ML StudioではTrain ModelにTwo-Class Logistic Regressionモジュールを接続するように学習アルゴリズムを指定することが出来ます。
 > そのため、あとから学習アルゴリズムを変更することが容易です。
 ![図準備中]()
 
-1. Train Modelを選択し、プロパティパネルの「Launch column selector」を選択します。表示れるダイアログで「ARR_DEL15」の列を選択し、右下のチェックボタンを押します。
+9. Train Modelを選択し、プロパティパネルの「Launch column selector」を選択します。表示れるダイアログで「ARR_DEL15」の列を選択し、右下のチェックボタンを押します。
 これは、TrainModelにどの値を予測するかを指定します（重要）。
 ![図準備中]()
 
-1. 「Score Model」モジュールと「Evaluate Model」モジュールを追加し、図のように接続します。
+10. 「Score Model」モジュールと「Evaluate Model」モジュールを追加し、図のように接続します。
 Score Modelモジュールについては[こちら(英語)](https://docs.microsoft.com/en-us/azure/machine-learning/studio-module-reference/score-model)を、Evaluate Modelモジュールについては[こちら(英語)](https://docs.microsoft.com/en-us/azure/machine-learning/studio-module-reference/evaluate-model)を御覧ください。
 ![図準備中]()
 
-1. 最後に作成したモデルを保存するため、ページ下部の「Save」ボタンを押します。続けて、「Run」ボタンを押して、アップロードしたデータセットを利用しモデルを学習させます（数分かかります）。
+11. 最後に作成したモデルを保存するため、ページ下部の「Save」ボタンを押します。続けて、「Run」ボタンを押して、アップロードしたデータセットを利用しモデルを学習させます（数分かかります）。
 ![図準備中]()
 
-1. 学習終了後、「Evalute Mode」モジュールの出力ポートをクリックし、「Visualize」ボタンを押し、モデルの精度を確認します。スクロールすると正確度(accuracy)、精度(precision)、AUC(Area Under Curve)などが表示されます。
+12. 学習終了後、「Evalute Mode」モジュールの出力ポートをクリックし、「Visualize」ボタンを押し、モデルの精度を確認します。スクロールすると正確度(accuracy)、精度(precision)、AUC(Area Under Curve)などが表示されます。
 
 ![図準備中]()
 
@@ -195,7 +195,7 @@ ROC曲線は青線で示され、グレーの対角線は予測モデルが50%�
 ![図準備中]()
 しかし、今回のデータセットには遅延に影響しそうな要因（天気など）が含まれていないため、このモデルではAUCが0.92になることはほぼ有りえませんが、次の演習ではこのAUCをなるべく良くすることが目標になります。
 
-1. Visualizationウィンドウ右上のXボタンを押して閉じます。
+13. Visualizationウィンドウ右上のXボタンを押して閉じます。
 
 # 演習4：モデルをチューニングする
 ここからが楽しいところです。
