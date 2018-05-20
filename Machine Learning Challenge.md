@@ -1,4 +1,4 @@
-![](https://github.com/MSFTImagine/computerscience/raw/master/Event-In-Box/Machine%20Learning%20Challenge/Images/ml-challenge.png)
+![](https://github.com/Microsoft/computerscience/raw/master/Events/Event-In-Box/Machine%20Learning%20Challenge/Images/ml-challenge.png)
 
 # 概要
 Machine Learning Challenge では、[Azure Machine Learning Studio](https://azure.microsoft.com/services/machine-learning-studio/)を使用して、主要な米国航空会社の到着時刻データを利用したシンプルな（そして非常に正確な）機械学習のモデルを構築します。
